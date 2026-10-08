@@ -1,2 +1,7 @@
-# Keep the CRM website out of the GitHub language bar. The files stay in the repo.
+# Keep most of the CRM website out of the GitHub language bar so TypeScript shows as a small share.
+# All the files stay in the repo.
 frontend-layer/** linguist-vendored
+frontend-layer/src/api.ts -linguist-vendored
+frontend-layer/src/Shell.tsx -linguist-vendored
+frontend-layer/src/Toast.tsx -linguist-vendored
+frontend-layer/src/hooks.ts -linguist-vendored
