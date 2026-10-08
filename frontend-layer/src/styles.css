@@ -1,0 +1,101 @@
+/* Shared base styles (borrower pay page and receipt). The CRM, login and dialogs have their own stylesheets. */
+:root {
+  --page: #9fb0c1;
+  --sky-a: #a9cdf5;
+  --sky-b: #cfe3fa;
+  --bg: #ffffff;
+  --card: #ffffff;
+  --ink: #141418;
+  --muted: #74767f;
+  --line: #e6e8ee;
+  --dark: #0b0b0d;
+  --green: #21b573;
+  --green-ink: #167a4f;
+  --green-lt: #d9f3e6;
+  --amber: #9a5b13;
+  --amber-lt: #fbecc8;
+  --red: #b3404a;
+  --red-lt: #f9dcdf;
+  --teal: #167a4f;
+  --teal-lt: #e3eefc;
+  --wa-bg: #eef2f6;
+  --wa-msg: #dcf5d0;
+  --serif: "Instrument Serif", "Bodoni Moda", Georgia, serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; min-height: 100vh; padding: 0;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased; color: var(--ink); background: var(--page);
+}
+a { color: var(--green-ink); }
+
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+.app { width: 100%; max-width: none; margin: 0; display: flex; flex-direction: column; gap: 0; }
+
+ 
+
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 20px; min-width: 0; animation: rise .6s var(--ease) both; }
+.card h2 { margin: 0 0 14px; font-family: var(--serif); font-weight: 400; font-size: 26px; letter-spacing: -.02em; }
+
+.small { font-size: 12px; color: var(--muted); }
+
+/* buttons */
+button { font: inherit; font-weight: 500; padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); cursor: pointer; transition: transform .25s var(--ease), background .25s, border-color .25s, box-shadow .25s; }
+button:hover:not(:disabled) { border-color: var(--ink); transform: translateY(-2px); }
+button:active:not(:disabled) { transform: scale(.96); }
+button.primary { background: var(--dark); border-color: var(--dark); color: #fff; }
+button.primary:hover:not(:disabled) { box-shadow: 0 12px 24px rgba(11, 11, 13, .28); }
+button.danger { background: var(--red); border-color: var(--red); color: #fff; }
+button.link { padding: 0; border: 0; background: none; color: var(--green-ink); font-size: 12px; text-decoration: underline; transform: none !important; }
+button.big { padding: 14px 28px; font-size: 15px; }
+button:disabled { opacity: .5; cursor: default; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid rgba(33, 181, 115, .45); outline-offset: 2px; }
+
+.notice { margin: 0 0 12px; padding: 10px 14px; border-radius: 14px; background: var(--amber-lt); color: #6b3d0a; }
+
+/* WhatsApp panel */
+
+.wa-status { margin-top: 6px; font-size: 11px; color: var(--muted); }
+.wa-status.ok { color: var(--green-ink); font-weight: 600; }
+.wa-status.bad { color: var(--red); font-weight: 600; }
+
+/* Call page */
+
+input, select { flex: 1; min-width: 0; padding: 11px 16px; font: inherit; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 999px; }
+input:focus, select:focus { border-color: var(--green); }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; margin: 0; }
+dt { color: var(--muted); }
+dd { margin: 0; font-weight: 600; }
+
+/* Pay + receipt pages */
+.center { text-align: center; }
+.receipt { max-width: 460px; margin: 40px auto; padding: 0 16px; }
+.receipt-card { padding: 28px; }
+.receipt .amount { margin: 8px 0 16px; font-family: var(--serif); font-size: 46px; }
+.receipt-header { text-align: center; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 2px solid var(--dark); }
+.receipt-header h1 { margin: 8px 0 4px; font-family: var(--serif); font-weight: 400; font-size: 28px; }
+.badge-success { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--green-lt); color: var(--green-ink); font-size: 12px; font-weight: 600; }
+.receipt-rows { grid-template-columns: 1fr auto; margin-bottom: 16px; }
+.receipt-rows .total { padding-top: 10px; border-top: 1px solid var(--line); font-size: 17px; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* =====================================================================
+   Home (login) page: one screen, nothing overlapping
+   ===================================================================== */
+html, body { overflow-x: clip; }
+
+/* Home: hero is one screen; content flows top -> bottom so nothing can collide */
+
+/* Overview: also exactly one screen; the panels scroll inside */
+
+/* The lighter "System status" page (no big table), so it doesn't need the fixed one-screen budget above. */
+

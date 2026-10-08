@@ -1,0 +1,42 @@
+.dlg-overlay {
+  position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 16px;
+  background: rgba(8, 10, 16, .55); backdrop-filter: blur(4px); animation: dlgFade .18s ease both;
+}
+.dlg {
+  width: min(460px, 100%); max-height: 92vh; overflow-y: auto; padding: 26px; border-radius: 24px;
+  background: #edebdd; color: #1b1717; box-shadow: 0 30px 80px rgba(0, 0, 0, .35); animation: dlgRise .22s cubic-bezier(.22, 1, .36, 1) both;
+  font-family: "Inter", system-ui, sans-serif;
+}
+.dlg h2 { margin: 0 0 16px; font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: 30px; letter-spacing: -.01em; }
+.dlg label { display: block; margin-bottom: 14px; font-size: 13px; font-weight: 600; color: #3a3b42; }
+.dlg input {
+  display: block; width: 100%; margin-top: 6px; padding: 12px 14px; font: inherit; font-weight: 400; color: #1b1717;
+  background: #f3f0e6; border: 1.5px solid transparent; border-radius: 14px; outline: none; box-sizing: border-box;
+}
+.dlg input:focus { border-color: #810100; background: #fff; }
+.dlg input[type="date"] { min-height: 46px; cursor: pointer; }
+.dlg label small { display: block; margin-top: 6px; font-size: 12px; font-weight: 400; color: #74767f; }
+.dlg-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.dlg-text { margin: 0 0 6px; line-height: 1.5; color: #3a3b42; }
+.dlg-error { margin: 0 0 14px; padding: 10px 14px; border-radius: 12px; background: #f9dcdf; color: #8a2a33; font-size: 13px; }
+.dlg-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+.dlg-actions button { padding: 11px 22px; border: 0; border-radius: 999px; font: inherit; font-weight: 600; font-size: 14px; cursor: pointer; }
+.dlg-actions button:disabled { opacity: .6; cursor: default; }
+.dlg-ghost { background: #e9e5d8; color: #1b1717; }
+.dlg-main { background: #810100; color: #fff; }
+.dlg-danger { background: #c4333f; color: #fff; }
+
+@keyframes dlgFade { from { opacity: 0; } }
+@keyframes dlgRise { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+@media (max-width: 480px) { .dlg-two { grid-template-columns: 1fr; } }
+
+.toast-pop {
+  position: fixed; z-index: 120; top: 18px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px;
+  max-width: min(560px, calc(100vw - 32px)); padding: 12px 14px 12px 18px; border-radius: 16px; font: 500 14px/1.4 "Inter", system-ui, sans-serif;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .35); animation: toastIn .3s cubic-bezier(.22, 1, .36, 1) both;
+}
+.toast-pop.bad { background: #3b1a1f; color: #ffb3bb; border: 1px solid #6b2a33; }
+.toast-pop.ok { background: #2f2a22; color: #edebdd; border: 1px solid #5a4a3a; }
+.toast-pop button { border: 0; background: transparent; color: inherit; font-size: 20px; line-height: 1; cursor: pointer; opacity: .7; }
+.toast-pop button:hover { opacity: 1; }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, -12px); } }

@@ -1,0 +1,25 @@
+# secrets and local config
+.env
+.env.*
+!.env.example
+!.env.local.example
+
+# databases (contain phone numbers and password hashes)
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# dependencies and build output
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# logs and OS/editor files
+*.log
+.DS_Store
+.vscode/
+.idea/

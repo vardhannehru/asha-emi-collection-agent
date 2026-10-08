@@ -1,0 +1,92 @@
+/* Login page: black, vibe purple and white. */
+.gate-page {
+  --black: #000; --purple: #ac58e9; --white: #fff; --gap: 8px;
+  min-height: 100vh; display: grid; place-items: center; padding: clamp(12px, 3vw, 40px); background: var(--black);
+  background-image: radial-gradient(55% 45% at 85% 0%, rgba(172, 88, 233, .28), transparent), radial-gradient(40% 35% at 0% 100%, rgba(172, 88, 233, .16), transparent);
+  font-family: "Inter", system-ui, sans-serif; color: var(--black);
+}
+.gate-frame {
+  width: min(1040px, 100%); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 14px; padding: 14px;
+  border-radius: 34px; background: #0d0d0f; border: 1px solid #1c1c20; box-shadow: 0 40px 120px rgba(0, 0, 0, .7);
+  animation: gateIn .8s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+/* form panel */
+.gate-panel {
+  display: flex; flex-direction: column; align-items: center; gap: 20px; padding: clamp(22px, 3.4vw, 40px) clamp(22px, 3.6vw, 44px) 26px;
+  border-radius: 24px; background: var(--purple); min-height: 560px;
+}
+.gate-logo { color: var(--black); line-height: 0; }
+.gate-copy { text-align: center; margin-top: auto; }
+.gate-copy h1 { margin: 0; font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: clamp(34px, 4.2vw, 50px); line-height: 1; letter-spacing: -.02em; }
+.gate-copy p { margin: 12px auto 0; max-width: 300px; font-size: 13.5px; line-height: 1.5; color: rgba(0, 0, 0, .72); }
+.gate-form { width: 100%; display: flex; flex-direction: column; gap: 10px; }
+.gate-form input {
+  width: 100%; padding: 15px 18px; border: 1px solid rgba(0, 0, 0, .38); border-radius: 14px; background: rgba(0, 0, 0, .1);
+  color: var(--black); font: inherit; font-size: 14.5px; outline: none; box-sizing: border-box; transition: border-color .2s, background .2s;
+}
+.gate-form input::placeholder { color: rgba(0, 0, 0, .55); }
+.gate-form input:focus { border-color: var(--black); background: rgba(0, 0, 0, .16); }
+.gate-error { margin: 0; padding: 10px 14px; border-radius: 12px; background: var(--black); color: var(--white); font-size: 13px; }
+.gate-submit {
+  display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 4px; padding: 15px 20px; border: 0; border-radius: 14px;
+  background: var(--black); color: var(--white); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform .25s, box-shadow .25s;
+}
+.gate-submit i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--white); color: var(--black); font-style: normal; font-size: 14px; transition: transform .35s; }
+.gate-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0, 0, 0, .35); }
+.gate-submit:hover:not(:disabled) i { transform: rotate(45deg); }
+.gate-submit:disabled { opacity: .7; cursor: default; }
+.gate-switch { margin: 0; font-size: 13px; color: rgba(0, 0, 0, .68); }
+.gate-switch button { border: 0; background: rgba(0, 0, 0, .14); border-radius: 8px; padding: 2px 8px; color: var(--black); font: inherit; font-size: 12.5px; cursor: pointer; }
+.gate-switch button:hover { background: var(--black); color: var(--white); }
+
+/* mosaic: the picture is sliced across a 4 x 4 grid, with a few tiles on top */
+.mosaic {
+  container-type: size; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: var(--gap);
+  min-height: 560px; border-radius: 24px; overflow: hidden;
+}
+.cell { min-width: 0; min-height: 0; overflow: hidden; grid-column: calc(var(--col) + 1); grid-row: calc(var(--row) + 1); position: relative; z-index: 2; border-radius: 16px; animation: cellIn .7s cubic-bezier(.22, 1, .36, 1) both; animation-delay: calc(var(--i) * 45ms + 250ms); }
+/* Each art cell shows its own slice: the picture is sized to cover the whole mosaic, then shifted back by the cell's position. */
+.cell.art {
+  --cw: calc((100cqw - 3 * var(--gap)) / 4); --ch: calc((100cqh - 3 * var(--gap)) / 4);
+  --ih: calc(max(100cqh, calc(100cqw / var(--ar))) * 1.3); --iw: calc(var(--ih) * var(--ar));
+  background-color: var(--art-bg); background-image: var(--art); background-repeat: no-repeat;
+  background-size: var(--iw) var(--ih);
+  background-position:
+    calc((100cqw - var(--iw)) / 2 - var(--col) * (var(--cw) + var(--gap)))
+    calc((100cqh - var(--ih)) * .3 - var(--row) * (var(--ch) + var(--gap)));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .09);
+  /* Scrambled: each slice sits --dx / --dy cells away from its real place, and slides home once the login is correct. */
+  z-index: 1;
+  translate: calc(var(--dx) * (100% + var(--gap))) calc(var(--dy) * (100% + var(--gap)));
+  transition: translate 1s cubic-bezier(.65, 0, .25, 1) calc(var(--i) * 45ms);
+}
+.mosaic.solved .cell.art { translate: 0 0; }
+.mosaic.shaking { animation: mosaicShake .45s ease; }
+.gate-logo svg { height: 92px; width: auto; }
+.tile-logo svg { height: clamp(68px, 9vw, 110px); width: auto; }
+.tile-stat { display: flex; flex-direction: column; justify-content: center; padding: 14px; background: var(--black); color: var(--white); border: 1px solid #26262b; text-align: center; }
+.tile-stat b { font-size: clamp(26px, 3.4vw, 40px); font-weight: 500; line-height: 1; }
+.tile-stat span { margin-top: 6px; font-size: 11.5px; color: #b8b8c0; }
+.tile-logo { display: grid; place-items: center; background: var(--purple); color: var(--black); font-size: clamp(30px, 4vw, 48px); }
+.tile-text { grid-column: calc(var(--col) + 1) / span 2; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 10px 16px; background: var(--white); color: var(--black); }
+.tile-text b { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: clamp(17px, 2vw, 23px); line-height: 1.05; }
+.tile-text span { font-size: 11.5px; line-height: 1.4; color: #4a4a52; }
+
+/* the black portal: a circle that opens from the button and swallows the screen */
+.portal {
+  position: fixed; inset: 0; z-index: 200; background: #000;
+  clip-path: circle(0px at var(--px) var(--py));
+  animation: portalOpen .85s cubic-bezier(.65, 0, .25, 1) forwards;
+}
+@keyframes portalOpen { to { clip-path: circle(150vmax at var(--px) var(--py)); } }
+@keyframes gateIn { from { opacity: 0; transform: translateY(18px) scale(.985); } }
+@keyframes mosaicShake { 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(3px); } }
+@keyframes cellIn { from { opacity: 0; transform: scale(.86); } }
+
+@media (max-width: 860px) {
+  .gate-frame { grid-template-columns: 1fr; }
+  .mosaic { display: none; }
+  .gate-panel { min-height: 0; }
+  .gate-copy { margin-top: 8px; }
+}
