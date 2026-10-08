@@ -1,0 +1,2 @@
+# Keep the CRM website out of the GitHub language bar. The files stay in the repo.
+frontend-layer/** linguist-vendored
