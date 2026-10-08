@@ -91,7 +91,3 @@ Optional: `frontend-layer/.env.local.example` shows how to enable a Shift+R deve
 ## Next steps
 
 An automated evaluation harness with scripted borrower scenarios, a real payment gateway, a link to a lender's own loan system, automatic retries, and reporting.
-
-## License
-
-MIT. See [LICENSE](LICENSE).
